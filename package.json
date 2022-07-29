@@ -1,4 +1,17 @@
 {
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "team profile generator ",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
   "dependencies": {
     "inquirer": "^8.2.4"
   }

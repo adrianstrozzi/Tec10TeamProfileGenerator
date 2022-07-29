@@ -1,106 +1,221 @@
-const inquirer = require('inquirer');
 const fs = require('fs');
+const inquirer = require('inquirer');
 
+const createHTML = require('./src/createHTML')
 
-const createReadme = ({ title, description, url, author, github, stack, install, email, license, }) =>
+const Manager = require('./lib/Manager')
+const Engineer = require('./lib/Engineer')
+const Intern = require('./lib/Intern')
 
-  `# <span style="color:skyblue">**${title}**</span>
+const teamArray = [];
 
-  ## <span style="color:violet">Table of Contents:</span>
-
-  1. [Description](#Description) 
-  2. [Installation](#Installation)
-  3. [Stack](#Stack)
-  4. [Usage](#Usage)  
-  5. [Contributing](#Contributing)
-  6. [License](#License)
-  7. [GitHub](#GitHub)
-  8. [E-mail](#E-mail)
-  9. [Author](#Author)
-
-  ## <span style="color:violet">Description</span>
-  
-  > ${description}.
-
-  ## <span style="color:violet">Installation</span>
-
-  -${install}
-
-  ## <span style="color:violet">Stack</span>
-
-  <span style="color:skyblue">**-${stack}**</span>
-  
-  ## <span style="color:violet">Usage</span>
-  
-  Use this **link** to access the App: [${title}](${url})
-
-  ## <span style="color:violet">Contributing</span>
-
-  Please feel free to contribute to this project by submitting a pull request.
-
-  ## <span style="color:violet">License</span>
-
-  ![License: ${license}](https://img.shields.io/badge/License-${license}-blue.svg)
-  
-  ## <span style="color:violet">GitHub</span>
-  
-  **${author}:** [${github}](${github})
-
-  ## <span style="color:violet">E-mail</span>
-  
-  **[${email}](${email})**
-  
-  ## <span style="color:violet">Author</span>
-  
-  **©2022 ${author}**`;
-
-inquirer
-  .prompt([
-    {
-      type: 'confirm',
-      name: 'new',
-      message: 'Do you want to create a new profile?',
-    },
-    {
-      type: 'list',
-      name: 'role',
-      message: 'Please choose the job position:',
-      choices: ['Manager', 'Engineer', 'Intern', 'Employee']
-    },
+const addManager = () => {
+  console.log(
+    `
+    =====================================
+    WELCOME TO THE TEAM PROFILE GENERATOR
+    =====================================
+    `
+  );
+  return inquirer.prompt([
     {
       type: 'input',
       name: 'name',
-      message: 'Please add a name:',
+      message: 'Please enter the Team Manager Name:',
+      validate: inputValidate => {
+        if (inputValidate) {
+          return true;
+        } else {
+          console.log("Please enter Manager Name!");
+          return false;
+        }
+      }
+    },
+    {
+      type: 'input',
+      name: 'id',
+      message: "Please enter the Manager's ID:",
+      validate: inputValidate => {
+        if (isNaN(inputValidate)) {
+          console.log("Please enter Manager's ID!")
+          return false;
+        } else {
+          return true;
+        }
+      }
     },
     {
       type: 'input',
       name: 'email',
-      message: 'Please add an email:',
+      message: "Please enter Manager's email:",
+      validate: email => {
+        valid = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email)
+        if (valid) {
+          return true;
+        } else {
+          console.log('Please enter an email!')
+          return false;
+        }
+      }
+    },
+    {
+      type: 'input',
+      name: 'officeNum',
+      message: "Please enter Manager's Office Number:",
+      validate: inputValidate => {
+        if (isNaN(inputValidate)) {
+          console.log('Please enter an Office Number!')
+          return false;
+        } else {
+          return true;
+        }
+      }
+    }
+  ])
+    .then(newManager => {
+      const { name, id, email, officeNum } = newManager;
+      const manager = new Manager(name, id, email, officeNum);
+
+      teamArray.push(manager);
+      console.log(manager);
+    })
+};
+
+
+const addEmployee = () => {
+  console.log(`
+  ==============================
+  ADD NEW EMPLOYEE FOR YOUR TEAM
+  ==============================
+  `);
+
+  return inquirer.prompt([
+    {
+      type: 'list',
+      name: 'role',
+      message: "Choose your Employee's Role:",
+      choices: ['Engineer', 'Intern']
+    },
+    {
+      type: 'input',
+      name: 'name',
+      message: "Please enter Employee Name:",
+      validate: inputValidate => {
+        if (inputValidate) {
+          return true;
+        } else {
+          console.log("Please enter an Employee's Name!");
+          return false;
+        }
+      }
+    },
+    {
+      type: 'input',
+      name: 'id',
+      message: "Please enter Employee's ID:",
+      validate: inputValidate => {
+        if (isNaN(inputValidate)) {
+          console.log("Please enter the employee's ID!")
+          return false;
+        } else {
+          return true;
+        }
+      }
+    },
+    {
+      type: 'input',
+      name: 'email',
+      message: "Please enter Employee Email:",
+      validate: email => {
+        valid = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email)
+        if (valid) {
+          return true;
+        } else {
+          console.log('Please enter an Email!')
+          return false;
+        }
+      }
     },
     {
       type: 'input',
       name: 'github',
-      message: 'Please add a github link:',
-    },
-    {
-      type: 'input',
-      name: 'office',
-      message: 'Please add an office location:',
+      message: "Please enter Employee Github User:",
+      when: (input) => input.role === "Engineer",
+      validate: inputValidate => {
+        if (inputValidate) {
+          return true;
+        } else {
+          console.log("Please enter the Employee's Github User!")
+        }
+      }
     },
     {
       type: 'input',
       name: 'school',
-      message: 'Please add a school:',
+      message: "Please enter Intern School:",
+      when: (input) => input.role === "Intern",
+      validate: inputValidate => {
+        if (inputValidate) {
+          return true;
+        } else {
+          console.log("Please enter Intern's School!")
+        }
+      }
     },
+    {
+      type: 'confirm',
+      name: 'addEmployee',
+      message: 'Add more Team Members?',
+      default: false
+    }
   ])
+    .then(employeeData => {
+
+      let { name, id, email, role, github, school, addEmployee } = employeeData;
+      let employee;
+
+      if (role === 'Engineer') {
+        employee = new Engineer(name, id, email, github);
+
+        console.log(employee);
+
+      } else if (role === 'Intern') {
+        employee = new Intern(name, id, email, school);
+
+        console.log(employee);
+      }
+
+      teamArray.push(employee);
+
+      if (addEmployee) {
+        return addEmployee(teamArray);
+      } else {
+        return teamArray;
+      }
+    })
+
+};
 
 
+const writeFile = data => {
+  fs.writeFile('./dist/index.html', data, err => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log("Your Team has been successfully created! Please check out index.html file in /dist folder.")
+    }
+  })
+};
 
-  .then((answers) => {
-
-    const readmeContent = createReadme(answers);
-
-    fs.writeFile('./document/README.md', readmeContent, (err) =>
-      err ? console.log(err) : console.log('Successfully created README.md file document folder!')
-    );
+addManager()
+  .then(addEmployee)
+  .then(teamArray => {
+    return createHTML(teamArray);
+  })
+  .then(newHTML => {
+    return writeFile(newHTML);
+  })
+  .catch(err => {
+    console.log(err);
   });
