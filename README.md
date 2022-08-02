@@ -1,57 +1,61 @@
-# <span style="color:skyblue">**Adrian Strozzi - Team Profile Generator**</span>
+# <span style="color:skyblue">**Team Profile Generator**</span>
 
 ## <span style="color:violet">Table of Contents</span>
 
 1. [Description](#Description)
 2. [Stack](#Stack)
-3. [Tutorial](#Tutorial)
-4. [Contributing](#Usage)
-5. [Tests](#Credits)
+3. [Video Tutorial](#Video-Tutorial)
+4. [Usage](#Usage)
+5. [Credits](#Credits)
 6. [License](#License)
 
 ## <span style="color:violet">Description</span>
 
-> Welcome to the Good Readme Generator! This app uses inquirer and Node's file system to create a README.md file. Run Node JS in your terminal and answer a couple of questions to generate your custom file.
+> This app uses Inquirer JS to create an HTML page that displays your Work Team. Just input information as requested by Inquirer and create profiles for your Manager and as many Engineer and Intern members as you want to add to your Team. Tests are included for each of the Models used in this project in order to review that the requested data is being received correctly.
 
 ## <span style="color:violet">Stack</span>
 
-<span style="color:skyblue">**1-JavaScript**</span>
+<span style="color:skyblue">**1 - JavaScript**</span>
 
-<span style="color:skyblue">**2-Node JS**</span> [(link)](https://nodejs.org/en/)
+<span style="color:skyblue">**2 - HTML**</span>
 
-<span style="color:skyblue">**3-Inquirer JS**</span> [(link)](https://www.npmjs.com/package//inquirer)
+<span style="color:skyblue">**3 - Tailwind**</span> [(link)](https://tailwindcss.com/)
 
-## <span style="color:violet">Tutorial</span>
+<span style="color:skyblue">**4 - Jest**</span> [(link)](https://jestjs.io/)
 
-Use this `link` to access a video tutorial: [Adrian Strozzi - Good Readme Generator](https://drive.google.com/file/d/1jfGz8Xs4U8RkGF-7WY0VY_lAHDw_tWhm/view?usp=sharing)
+<span style="color:skyblue">**5 - Inquirer**</span> [(link)](https://www.npmjs.com/package/inquirer)
+
+## <span style="color:violet">Video Tutorial</span>
+
+Use this `link` to access a video tutorial: [Adrian Strozzi - Team Profile Generator](new)
 
 ## <span style="color:violet">Usage</span>
 
-Below is an example of a created **README.md file**:
+1 - You can `clone` or `download` this repo as a ZIP file:
 
-![mainpage](./images/readme.png)
+```sh
+git clone https://github.com/adrianstrozzi/Tec10TeamProfileGenerator
+```
 
-First download this app as a `Zip file` extract it and open it in VS Code or you preferred code editor.
+2 - Once you have downloaded the App use the following command in your terminal to `install the required dependencies`:
 
-Go to the root folder and install `Inquirer` with npm install:
+```sh
+npm install
+```
 
-![mainpage](./images/npminstall.png)
+3 - Once dependencies have been installed run the following command to start `Inquirer`:
 
-Go to the root folder and use `node index.js` to initialize the questions:
+```sh
+node index.js
+```
 
-![mainpage](./images/node.png)
+4 - Run the following command to start `Jest` and execute the tests:
 
-Inquirer will start a couple of `questions`, just write your answer and hit Enter when finished:
+```sh
+npm run test
+```
 
-![mainpage](./images/question.png)
-
-Once you answer a couple of questions you will get a `confirmation`:
-
-![mainpage](./images/confirmation.png)
-
-Your new `README file` will be generated at the document folder:
-
-![mainpage](./images/documentfolder.png)
+5 - Visit the [Video Tutorial](new) for a detailed guide on how to use the App.
 
 ## <span style="color:violet">Credits</span>
 
