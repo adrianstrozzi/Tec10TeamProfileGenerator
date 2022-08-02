@@ -147,7 +147,7 @@ const createTeamPage = teamMembers => {
     </div>
   </main>
 </body>
-</html>s
+</html>
 `;
 }
 

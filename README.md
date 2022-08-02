@@ -27,7 +27,7 @@
 
 ## <span style="color:violet">Video Tutorial</span>
 
-Use this `link` to access a video tutorial: [Adrian Strozzi - Team Profile Generator](new)
+Use this `link` to access a video tutorial: [Adrian Strozzi - Team Profile Generator](https://youtu.be/4sdCzADlThs)
 
 ## <span style="color:violet">Usage</span>
 
@@ -55,7 +55,7 @@ node index.js
 npm run test
 ```
 
-5 - Visit the [Video Tutorial](new) for a detailed guide on how to use the App.
+5 - Visit the [Video Tutorial](https://youtu.be/4sdCzADlThs) for a detailed guide on how to use the App.
 
 ## <span style="color:violet">Credits</span>
 
