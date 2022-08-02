@@ -1,15 +1,16 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-const createHTML = require('./src/createHTML')
-
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
-const teamArray = [];
+const createHTML = require('./src/createHTML')
 
-const addManager = () => {
+
+const teamMembersArray = [];
+
+const createManager = () => {
   console.log(
     `
     =====================================
@@ -60,7 +61,7 @@ const addManager = () => {
     },
     {
       type: 'input',
-      name: 'officeNum',
+      name: 'officeNumber',
       message: "Please enter Manager's Office Number:",
       validate: inputValidate => {
         if (isNaN(inputValidate)) {
@@ -73,16 +74,16 @@ const addManager = () => {
     }
   ])
     .then(newManager => {
-      const { name, id, email, officeNum } = newManager;
-      const manager = new Manager(name, id, email, officeNum);
+      const { name, id, email, officeNumber } = newManager;
+      const manager = new Manager(name, id, email, officeNumber);
 
-      teamArray.push(manager);
+      teamMembersArray.push(manager);
       console.log(manager);
     })
 };
 
 
-const addEmployee = () => {
+const createEmployee = () => {
   console.log(`
   ==============================
   ADD NEW EMPLOYEE FOR YOUR TEAM
@@ -139,7 +140,7 @@ const addEmployee = () => {
     {
       type: 'input',
       name: 'github',
-      message: "Please enter Employee Github User:",
+      message: "Please enter Employee Github User (only include the user name):",
       when: (input) => input.role === "Engineer",
       validate: inputValidate => {
         if (inputValidate) {
@@ -164,14 +165,14 @@ const addEmployee = () => {
     },
     {
       type: 'confirm',
-      name: 'addEmployee',
+      name: 'addMoreEmployees',
       message: 'Add more Team Members?',
       default: false
     }
   ])
     .then(employeeData => {
 
-      let { name, id, email, role, github, school, addEmployee } = employeeData;
+      let { name, id, email, role, github, school, addMoreEmployees } = employeeData;
       let employee;
 
       if (role === 'Engineer') {
@@ -185,12 +186,12 @@ const addEmployee = () => {
         console.log(employee);
       }
 
-      teamArray.push(employee);
+      teamMembersArray.push(employee);
 
-      if (addEmployee) {
-        return addEmployee(teamArray);
+      if (addMoreEmployees) {
+        return createEmployee(teamMembersArray);
       } else {
-        return teamArray;
+        return teamMembersArray;
       }
     })
 
@@ -208,13 +209,13 @@ const writeFile = data => {
   })
 };
 
-addManager()
-  .then(addEmployee)
-  .then(teamArray => {
-    return createHTML(teamArray);
+createManager()
+  .then(createEmployee)
+  .then(teamMembersArray => {
+    return createHTML(teamMembersArray);
   })
-  .then(newHTML => {
-    return writeFile(newHTML);
+  .then(newHTMLPage => {
+    return writeFile(newHTMLPage);
   })
   .catch(err => {
     console.log(err);
